@@ -24,11 +24,12 @@ func (p PostController) Insert(ctx *gin.Context) {
 	var post models.Post
 	ctx.ShouldBindJSON(&post)
 	if post.Title == "" {
-		utilities.Error(ctx, http.StatusBadRequest, post)
+		utilities.Error(ctx, http.StatusBadRequest, "Title is required")
 		return
 	}
 	if post.Body == "" {
 		utilities.Error(ctx, http.StatusBadRequest, "Body is required")
+		return
 	}
 	err := p._postSerivce.Insert(post)
 	if err != nil {
